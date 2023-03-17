@@ -25,21 +25,15 @@ import java.util.stream.Collectors;
 
 
     //Get all books from the library sorted by the author and by their title (in case an author has more books)
-
     @GetMapping("/books")
-    public ResponseEntity<List<Book>> getAllBooks(@RequestParam(defaultValue = "author") String sort) {
+    public ResponseEntity<List<Book>> getAllBooks() {
 
     List<Book> sortedBooks;
 
-    if (sort.equalsIgnoreCase("author")) {
-        sortedBooks = books.stream()
-                .sorted(Comparator.comparing(Book::getAuthor).thenComparing(Book::getTitle))
-                .collect(Collectors.toList());
-    } else {
         sortedBooks = books.stream()
                 .sorted(Comparator.comparing(Book::getTitle).thenComparing(Book::getAuthor))
                 .collect(Collectors.toList());
-    }
+    
     return new ResponseEntity<>(sortedBooks, HttpStatus.OK);
 }
 
